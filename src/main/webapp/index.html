@@ -94,7 +94,7 @@
             let created = items[i]['created'];
             let done = items[i]['done'];
             $("#table tr:last").after(
-                '<tr><td id="id">' + id + '</td>'
+                '<tr class="rows"><td id="id">' + id + '</td>'
                 + '<td>' + desc + '</td>'
                 + '<td>' + created + '</td>'
                 + '<td align="middle"><input type="checkbox" id="' + id + '" name="task" value="task"></td></tr>'
@@ -103,9 +103,9 @@
     }
 
     function deleteRows() {
-        let all_td = document.getElementsByTagName("td");
-        for(let i = 0; i < all_td.length; i++){
-            all_td[i].innerHTML="";
+        let rows = document.getElementsByClassName("rows");
+        for(let i = 0; i < rows.length; i++){
+            rows[i].innerHTML = "";
         }
     }
 </script>
