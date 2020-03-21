@@ -73,6 +73,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("Item: id=%s, desc=%s, created=%s, done=%s", id, desc, created, done);
+        return String.format("Item: id=%s, desc=%s, done=%s", id, desc, done);
     }
 }

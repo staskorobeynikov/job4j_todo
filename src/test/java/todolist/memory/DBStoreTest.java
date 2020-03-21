@@ -1,5 +1,7 @@
 package todolist.memory;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import todolist.models.Item;
 
@@ -11,70 +13,79 @@ import static org.junit.Assert.*;
 
 public class DBStoreTest {
 
-    private final Store store = DBStore.getInstance();
-
     @Test
     public void whenAddItemMethodTest() {
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
+
         Item item = new Item();
-        item.setCreated(new Timestamp(System.currentTimeMillis()));
+        item.setCreated(new Timestamp(1585047600000L));
         item.setDesc("Learn Hibernate");
         item.setDone(false);
 
         store.addItem(item);
 
-        List<Item> list = store.findAll();
-        assertThat(list.iterator().next().getDesc(), is("Learn Hibernate"));
+        assertThat(store.findAll().get(0).getDesc(), is("Learn Hibernate"));
+        assertThat(store.findAll().get(0).getCreated(), is(new Timestamp(1585047600000L)));
+
+        session.clear();
+        sessionFactory.close();
     }
 
     @Test
     public void whenTestMethodUpdate() {
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
+
         Item first = new Item();
-        first.setCreated(new Timestamp(System.currentTimeMillis()));
+        first.setCreated(new Timestamp(1585047600000L));
         first.setDesc("Learn Hibernate");
         first.setDone(false);
 
-        Item second = new Item();
-        second.setCreated(new Timestamp(System.currentTimeMillis()));
-        second.setDesc("Learn Spring");
-        second.setDone(false);
-
         store.addItem(first);
-        store.addItem(second);
 
-        Item update = new Item();
-        update.setId(2);
-        update.setDone(true);
-        store.updateItem(update);
+        int id = store.findAll().get(0).getId();
+        first.setId(id);
+        first.setDone(true);
 
-        List<Item> list = store.findAll();
+        store.updateItem(first);
 
-        assertThat(list.get(1).isDone(), is(true));
-        assertThat(list.iterator().next().isDone(), is(false));
-        assertThat(list.get(1).getDesc(), is("Learn Spring"));
+        List<Item> result = store.findAll();
+
+        assertThat(result.size(), is(1));
+        assertThat(result.get(0).isDone(), is(true));
+        assertThat(result.get(0).getDesc(), is("Learn Hibernate"));
+
+        session.clear();
+        sessionFactory.close();
     }
 
     @Test
     public void whenTestMethodShowFilterItems() {
-        Item first = new Item();
-        first.setCreated(new Timestamp(System.currentTimeMillis()));
-        first.setDesc("Learn Hibernate");
-        first.setDone(false);
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
 
+        Item first = new Item();
+        first.setCreated(new Timestamp(1585047600000L));
+        first.setDesc("Learn Hibernate");
+        first.setDone(true);
         Item second = new Item();
-        second.setCreated(new Timestamp(System.currentTimeMillis()));
+        second.setCreated(new Timestamp(1585054800000L));
         second.setDesc("Learn Spring");
         second.setDone(false);
 
         store.addItem(first);
         store.addItem(second);
 
-        Item update = new Item();
-        update.setId(2);
-        update.setDone(true);
-        store.updateItem(update);
-
         List<Item> list = store.showFilterItems();
 
-        assertThat(list.iterator().next().getDesc(), is("Learn Hibernate"));
+        assertThat(list.size(), is(1));
+        assertThat(list.get(0).getDesc(), is("Learn Spring"));
+
+        session.clear();
+        sessionFactory.close();
     }
 }

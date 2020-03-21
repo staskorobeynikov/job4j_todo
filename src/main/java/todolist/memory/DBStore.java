@@ -11,11 +11,13 @@ import java.util.function.Function;
 
 public class DBStore implements Store {
 
-    private static final DBStore INSTANCE = new DBStore();
+    private static final DBStore INSTANCE = new DBStore(HibernateFactory.getFactory());
 
-    private final SessionFactory factory = new Configuration()
-            .configure("Items.cfg.xml")
-            .buildSessionFactory();
+    private final SessionFactory factory;
+
+    public DBStore(SessionFactory factory) {
+        this.factory = factory;
+    }
 
     public static DBStore getInstance() {
         return INSTANCE;
