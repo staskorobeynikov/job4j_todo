@@ -3,7 +3,6 @@ package todolist.memory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import todolist.models.Item;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.function.Function;
 
 public class DBStore implements Store {
 
-    private static final DBStore INSTANCE = new DBStore(HibernateFactory.getFactory());
+    private static final Store INSTANCE = new DBStore(HibernateFactory.getFactory());
 
     private final SessionFactory factory;
 
@@ -19,7 +18,7 @@ public class DBStore implements Store {
         this.factory = factory;
     }
 
-    public static DBStore getInstance() {
+    public static Store getInstance() {
         return INSTANCE;
     }
 

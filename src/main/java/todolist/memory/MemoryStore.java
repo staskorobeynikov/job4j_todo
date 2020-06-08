@@ -34,7 +34,7 @@ public class MemoryStore implements Store {
 
     @Override
     public List<Item> showFilterItems() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
