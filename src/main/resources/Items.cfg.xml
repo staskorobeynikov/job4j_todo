@@ -8,6 +8,6 @@
         <property name="connection.password">password</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
 
-        <mapping resource="todolist/models/Item.hbm.xml"/>
+        <mapping class="todolist.models.Item"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,12 +1,18 @@
 package todolist.models;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+@Entity
+@Table(name = "items")
 public class Item {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "description")
     private String desc;
 
     private Timestamp created;

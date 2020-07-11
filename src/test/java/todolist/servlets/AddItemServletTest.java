@@ -14,6 +14,8 @@ import todolist.models.Item;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -25,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class AddItemServletTest {
 
     @Test
-    public void whenTestMethodPostThanAddNewItemInStore() {
+    public void whenTestMethodPostThanAddNewItemInStore() throws IOException {
         Validate validate = new ValidateStub();
 
         PowerMockito.mockStatic(ValidateService.class);
