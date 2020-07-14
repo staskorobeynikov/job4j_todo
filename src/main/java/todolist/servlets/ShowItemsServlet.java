@@ -1,7 +1,6 @@
 package todolist.servlets;
 
 import com.google.gson.Gson;
-import todolist.logic.Validate;
 import todolist.logic.ValidateService;
 import todolist.models.Item;
 
@@ -13,11 +12,9 @@ import java.util.List;
 
 public class ShowItemsServlet extends HttpServlet {
 
-    private final Validate validate = ValidateService.getInstance();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Item> list = validate.findAll();
+        List<Item> list = ValidateService.getInstance().findAll();
         String json = new Gson().toJson(list);
         resp.setContentType("json");
         resp.getWriter().write(json);

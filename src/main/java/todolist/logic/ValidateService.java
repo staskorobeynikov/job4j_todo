@@ -3,6 +3,7 @@ package todolist.logic;
 import todolist.memory.DBStore;
 import todolist.memory.Store;
 import todolist.models.Item;
+import todolist.models.User;
 
 import java.util.List;
 
@@ -37,5 +38,15 @@ public class ValidateService implements Validate {
     @Override
     public List<Item> showFilterItems() {
         return store.showFilterItems();
+    }
+
+    @Override
+    public void addUser(User user) {
+        store.addUser(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return store.findByEmail(email);
     }
 }

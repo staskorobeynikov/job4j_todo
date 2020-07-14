@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import todolist.models.Item;
+import todolist.models.User;
 
 import java.util.List;
 import java.util.function.Function;
@@ -65,6 +66,21 @@ public class DBStore implements Store {
                 session -> session.createQuery(
                         "FROM todolist.models.Item WHERE done = false ORDER BY id"
                 ).list()
+        );
+    }
+
+    @Override
+    public void addUser(User user) {
+        this.tx(session -> session.save(user));
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return (User) this.tx(
+                session -> session
+                        .createQuery("FROM todolist.models.User WHERE email = :email1")
+                        .setParameter("email1", email)
+                        .uniqueResult()
         );
     }
 }

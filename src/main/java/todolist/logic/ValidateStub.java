@@ -3,6 +3,7 @@ package todolist.logic;
 import todolist.memory.MemoryStore;
 import todolist.memory.Store;
 import todolist.models.Item;
+import todolist.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +37,15 @@ public class ValidateStub implements Validate {
     @Override
     public List<Item> findAll() {
         return store.findAll();
+    }
+
+    @Override
+    public void addUser(User user) {
+
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
     }
 }

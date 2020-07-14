@@ -1,25 +1,31 @@
+$(document).ready(function () {
+    showAll();
+});
+
 function addItem() {
-    if (validate()) {
+    if (checkFormCreateItem()) {
         $.ajax({
                 method: 'POST',
-                url: './add',
+                url: './add.do',
                 data: {desc : $("#description").val()},
                 success: function ($data) {
-                    console.log($data);
+                    let check = $data !== '';
+                    if (check) {
+                        window.location.href = "./auth.do";
+                    }
                 }
             }
         );
+        location.reload();
     }
-    location.reload();
 }
 
-function validate() {
+function validate(data) {
     let result = true;
     let answer = '';
-    let elements = [$("#description")];
-    for (let i = 0; i < elements.length; i++) {
-        if (elements[i].val() === '') {
-            answer += elements[i].attr("placeholder") + "\n";
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].val() === '') {
+            answer += data[i].attr("placeholder") + "\n";
             result = false;
         }
     }
@@ -28,10 +34,6 @@ function validate() {
     }
     return result;
 }
-
-$(document).ready(function () {
-    showAll();
-});
 
 function filterItems() {
     let check = $("#filter").prop("checked");
@@ -66,19 +68,32 @@ function showFilterItems() {
 
 function addRowsTable(data) {
     let items = data;
-    console.log(items);
     deleteRows();
+    let result = '';
     for (let i = 0; i < items.length; i++) {
         let id = items[i]['id'];
         let desc = items[i]['desc'];
         let created = items[i]['created'];
-        $("#table tr:last").after(
-            '<tr class="rows"><td id="id">' + id + '</td>'
+        let author = items[i]['user'].username;
+        let done = items[i]['done'];
+        result += '<tr class="rows"><td id="id">' + id + '</td>'
             + '<td>' + desc + '</td>'
+            + '<td>' + author + '</td>'
             + '<td>' + created + '</td>'
-            + '<td style="text-align: center"><input type="checkbox" id="' + id + '" name="task" value="task"></td></tr>'
-        );
+             ;
+        if (!done) {
+            result += '<td style="text-align: center; background-color: red">'
+                + '<input type="checkbox" id="' + id + '" name="task" value="task">'
+                + '</td>'
+                + '</tr>'
+        } else {
+            result += '<td style="text-align: center; background-color: lightgreen">'
+                + '<input type="checkbox" id="' + id + '" name="task" value="task">'
+                + '</td>'
+                + '</tr>'
+        }
     }
+    document.getElementById("tableBody").innerHTML = result;
 }
 
 function deleteRows() {
@@ -94,12 +109,35 @@ $(document).on('change', ':checkbox' ,function () {
     if (id !== "filter") {
         $.ajax({
             type: "POST",
-            url: './update',
+            url: './update.do',
             data: {id : $(this).attr("id"), done : $(this).prop("checked")},
             success: function (data) {
                 console.log(data);
+                let check = data !== '';
+                if (check) {
+                    window.location.href = "./auth.do";
+                }
             }
         });
         location.reload();
     }
 });
+
+function checkFormCreateItem() {
+    let elements = [$("#description")];
+    return validate(elements);
+}
+
+function checkFormRegistration() {
+    let elements = [$("#username"), $("#regEmail"), $("#regPassword")];
+    return validate(elements);
+}
+
+function checkFormAuth() {
+    let elements = [$("#email"), $("#password")];
+    return validate(elements);
+}
+
+function redirectPageLogin() {
+    window.location.href = "./auth.do";
+}

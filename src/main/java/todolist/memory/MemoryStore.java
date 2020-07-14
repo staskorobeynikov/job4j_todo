@@ -1,6 +1,7 @@
 package todolist.memory;
 
 import todolist.models.Item;
+import todolist.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,5 +41,15 @@ public class MemoryStore implements Store {
     @Override
     public List<Item> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    @Override
+    public void addUser(User user) {
+
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
     }
 }

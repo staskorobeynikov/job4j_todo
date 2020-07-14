@@ -8,17 +8,15 @@
     <servlet>
         <servlet-name>AddItemServlet</servlet-name>
         <servlet-class>todolist.servlets.AddItemServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddItemServlet</servlet-name>
-        <url-pattern>/add</url-pattern>
+        <url-pattern>/add.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>ShowItemsServlet</servlet-name>
         <servlet-class>todolist.servlets.ShowItemsServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShowItemsServlet</servlet-name>
@@ -28,21 +26,46 @@
     <servlet>
         <servlet-name>UpdateItemServlet</servlet-name>
         <servlet-class>todolist.servlets.UpdateItemServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateItemServlet</servlet-name>
-        <url-pattern>/update</url-pattern>
+        <url-pattern>/update.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>FilterItemsServlet</servlet-name>
         <servlet-class>todolist.servlets.FilterItemsServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>FilterItemsServlet</servlet-name>
         <url-pattern>/filter</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RegServlet</servlet-name>
+        <servlet-class>todolist.servlets.RegServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegServlet</servlet-name>
+        <url-pattern>/reg.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>todolist.servlets.AuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth.do</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>todolist.filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
 </web-app>
