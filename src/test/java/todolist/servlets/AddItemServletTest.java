@@ -10,9 +10,11 @@ import todolist.logic.Validate;
 import todolist.logic.ValidateService;
 import todolist.logic.ValidateStub;
 import todolist.models.Item;
+import todolist.models.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -29,13 +31,18 @@ public class AddItemServletTest {
     @Test
     public void whenTestMethodPostThanAddNewItemInStore() throws IOException {
         Validate validate = new ValidateStub();
+        User user = new User("Anonymous", "root@local", "root");
+        user.setId(1);
 
         PowerMockito.mockStatic(ValidateService.class);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
 
         when(ValidateService.getInstance()).thenReturn(validate);
         when(req.getParameter("desc")).thenReturn("Learn Hibernate");
+        when(req.getSession()).thenReturn(session);
+        when(req.getSession().getAttribute("user")).thenReturn(user);
 
         new AddItemServlet().doPost(req, resp);
         Item test = validate.findAll().get(0);

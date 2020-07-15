@@ -1,64 +1,12 @@
 $(document).ready(function () {
     showAll();
+    getCurrentUser();
 });
-
-function addItem() {
-    if (checkFormCreateItem()) {
-        $.ajax({
-                method: 'POST',
-                url: './add.do',
-                data: {desc : $("#description").val()},
-                success: function ($data) {
-                    let check = $data !== '';
-                    if (check) {
-                        window.location.href = "./auth.do";
-                    }
-                }
-            }
-        );
-        location.reload();
-    }
-}
-
-function validate(data) {
-    let result = true;
-    let answer = '';
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].val() === '') {
-            answer += data[i].attr("placeholder") + "\n";
-            result = false;
-        }
-    }
-    if (!result) {
-        alert(answer);
-    }
-    return result;
-}
-
-function filterItems() {
-    let check = $("#filter").prop("checked");
-    if (check) {
-        showAll();
-    } else {
-        showFilterItems();
-    }
-}
 
 function showAll() {
     $.ajax({
         type: 'POST',
         url: './show',
-        dataType: 'json',
-        success: function ($data) {
-            addRowsTable($data);
-        }
-    });
-}
-
-function showFilterItems() {
-    $.ajax({
-        type: 'POST',
-        url: './filter',
         dataType: 'json',
         success: function ($data) {
             addRowsTable($data);
@@ -79,8 +27,7 @@ function addRowsTable(data) {
         result += '<tr class="rows"><td id="id">' + id + '</td>'
             + '<td>' + desc + '</td>'
             + '<td>' + author + '</td>'
-            + '<td>' + created + '</td>'
-             ;
+            + '<td>' + created + '</td>';
         if (!done) {
             result += '<td style="text-align: center; background-color: red">'
                 + '<input type="checkbox" id="' + id + '" name="task" value="task">'
@@ -103,6 +50,56 @@ function deleteRows() {
     }
 }
 
+function getCurrentUser() {
+    $.ajax({
+        type: 'POST',
+        url: './current',
+        dataType: 'json',
+        success: function (data) {
+            document.getElementById("current")
+                .innerHTML = "Current User | " + data['username'];
+        }
+    });
+}
+
+function filterItems() {
+    let check = $("#filter").prop("checked");
+    if (check) {
+        showAll();
+    } else {
+        showFilterItems();
+    }
+}
+
+function showFilterItems() {
+    $.ajax({
+        type: 'POST',
+        url: './filter',
+        dataType: 'json',
+        success: function ($data) {
+            addRowsTable($data);
+        }
+    });
+}
+
+function addItem() {
+    if (checkFormCreateItem()) {
+        $.ajax({
+                method: 'POST',
+                url: './add.do',
+                data: {desc : $("#description").val()},
+                success: function ($data) {
+                    let check = $data !== '';
+                    if (check) {
+                        window.location.href = "./auth.do";
+                    }
+                }
+            }
+        );
+        location.reload();
+    }
+}
+
 $(document).on('change', ':checkbox' ,function () {
     let id = $(this).attr("id");
     console.log(id);
@@ -122,6 +119,21 @@ $(document).on('change', ':checkbox' ,function () {
         location.reload();
     }
 });
+
+function validate(data) {
+    let result = true;
+    let answer = '';
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].val() === '') {
+            answer += data[i].attr("placeholder") + "\n";
+            result = false;
+        }
+    }
+    if (!result) {
+        alert(answer);
+    }
+    return result;
+}
 
 function checkFormCreateItem() {
     let elements = [$("#description")];

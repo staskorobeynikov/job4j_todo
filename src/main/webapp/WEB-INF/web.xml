@@ -68,4 +68,13 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>CurrentUserServlet</servlet-name>
+        <servlet-class>todolist.servlets.CurrentUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CurrentUserServlet</servlet-name>
+        <url-pattern>/current</url-pattern>
+    </servlet-mapping>
 </web-app>
