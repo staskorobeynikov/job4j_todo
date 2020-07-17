@@ -13,9 +13,9 @@ public class ValidateStub implements Validate {
     private final Store store = MemoryStore.getInstance();
 
     @Override
-    public void addItem(Item item) {
+    public Item addItem(Item item) {
         item.setId(1);
-        store.addItem(item);
+        return store.addItem(item);
     }
 
     @Override

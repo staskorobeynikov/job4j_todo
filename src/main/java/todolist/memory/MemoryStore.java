@@ -22,8 +22,9 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public void addItem(Item item) {
+    public Item addItem(Item item) {
         store.put(item.getId(), item);
+        return item;
     }
 
     @Override

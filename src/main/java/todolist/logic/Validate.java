@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Validate {
 
-    void addItem(Item item);
+    Item addItem(Item item);
 
     void updateItem(Item item);
 

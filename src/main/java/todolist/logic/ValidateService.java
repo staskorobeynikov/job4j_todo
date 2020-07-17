@@ -21,8 +21,8 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public void addItem(Item item) {
-        store.addItem(item);
+    public Item addItem(Item item) {
+        return store.addItem(item);
     }
 
     @Override

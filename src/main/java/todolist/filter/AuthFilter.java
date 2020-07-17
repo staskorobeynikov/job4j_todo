@@ -8,18 +8,18 @@ import java.io.IOException;
 public class AuthFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest sreq, ServletResponse sresp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) sreq;
-        HttpServletResponse resp = (HttpServletResponse) sresp;
+    public void doFilter(ServletRequest sReq, ServletResponse sResp, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) sReq;
+        HttpServletResponse resp = (HttpServletResponse) sResp;
         String uri = req.getRequestURI();
         if (uri.endsWith("auth.do") || uri.contains("reg.do")) {
-            chain.doFilter(sreq, sresp);
+            chain.doFilter(sReq, sResp);
             return;
         }
         if (req.getSession().getAttribute("user") == null) {
-            req.getRequestDispatcher("login.html").forward(req, resp);
+            resp.sendError(401, "Unauthorized user");
             return;
         }
-        chain.doFilter(sreq, sresp);
+        chain.doFilter(sReq, sResp);
     }
 }

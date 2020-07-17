@@ -1,5 +1,6 @@
 package todolist.servlets;
 
+import com.google.gson.Gson;
 import todolist.logic.ValidateService;
 import todolist.models.Item;
 import todolist.models.User;
@@ -18,6 +19,9 @@ public class AddItemServlet extends HttpServlet {
         Item item = new Item(desc);
         User user = (User) req.getSession().getAttribute("user");
         item.setUser(user);
-        ValidateService.getInstance().addItem(item);
+        Item addItem = ValidateService.getInstance().addItem(item);
+        String json = new Gson().toJson(addItem);
+        resp.setContentType("json");
+        resp.getWriter().write(json);
     }
 }

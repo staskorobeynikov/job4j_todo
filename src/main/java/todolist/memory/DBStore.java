@@ -39,8 +39,9 @@ public class DBStore implements Store {
     }
 
     @Override
-    public void addItem(Item item) {
+    public Item addItem(Item item) {
         this.tx(session -> session.save(item));
+        return item;
     }
 
     @Override

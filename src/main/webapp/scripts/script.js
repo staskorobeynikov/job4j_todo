@@ -19,28 +19,34 @@ function addRowsTable(data) {
     deleteRows();
     let result = '';
     for (let i = 0; i < items.length; i++) {
-        let id = items[i]['id'];
-        let desc = items[i]['desc'];
-        let created = items[i]['created'];
-        let author = items[i]['user'].username;
-        let done = items[i]['done'];
-        result += '<tr class="rows"><td id="id">' + id + '</td>'
-            + '<td>' + desc + '</td>'
-            + '<td>' + author + '</td>'
-            + '<td>' + created + '</td>';
-        if (!done) {
-            result += '<td style="text-align: center; background-color: red">'
-                + '<input type="checkbox" id="' + id + '" name="task" value="task">'
-                + '</td>'
-                + '</tr>'
-        } else {
-            result += '<td style="text-align: center; background-color: lightgreen">'
-                + '<input type="checkbox" id="' + id + '" name="task" value="task">'
-                + '</td>'
-                + '</tr>'
-        }
+        result += formStringForInsert(items[i]);
     }
     document.getElementById("tableBody").innerHTML = result;
+}
+
+function formStringForInsert(data) {
+    let result = '';
+    let id = data['id'];
+    let desc = data['desc'];
+    let created = data['created'];
+    let author = data['user'].username;
+    let done = data['done'];
+    result += '<tr class="rows"><td id="id">' + id + '</td>'
+        + '<td>' + desc + '</td>'
+        + '<td>' + author + '</td>'
+        + '<td>' + created + '</td>';
+    if (!done) {
+        result += '<td style="text-align: center; background-color: red">'
+            + '<input type="checkbox" id="' + id + '" name="task" value="task">'
+            + '</td>'
+            + '</tr>'
+    } else {
+        result += '<td style="text-align: center; background-color: lightgreen">'
+            + '<input type="checkbox" id="' + id + '" name="task" value="task">'
+            + '</td>'
+            + '</tr>'
+    }
+    return result;
 }
 
 function deleteRows() {
@@ -82,43 +88,10 @@ function showFilterItems() {
     });
 }
 
-function addItem() {
-    if (checkFormCreateItem()) {
-        $.ajax({
-                method: 'POST',
-                url: './add.do',
-                data: {desc : $("#description").val()},
-                success: function ($data) {
-                    let check = $data !== '';
-                    if (check) {
-                        window.location.href = "./auth.do";
-                    }
-                }
-            }
-        );
-        location.reload();
-    }
+function addNewRow(data) {
+    let result = formStringForInsert(data);
+    $('#tableBody tr:last').after(result);
 }
-
-$(document).on('change', ':checkbox' ,function () {
-    let id = $(this).attr("id");
-    console.log(id);
-    if (id !== "filter") {
-        $.ajax({
-            type: "POST",
-            url: './update.do',
-            data: {id : $(this).attr("id"), done : $(this).prop("checked")},
-            success: function (data) {
-                console.log(data);
-                let check = data !== '';
-                if (check) {
-                    window.location.href = "./auth.do";
-                }
-            }
-        });
-        location.reload();
-    }
-});
 
 function validate(data) {
     let result = true;
