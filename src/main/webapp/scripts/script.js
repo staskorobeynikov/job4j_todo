@@ -1,6 +1,8 @@
 $(document).ready(function () {
     showAll();
     getCurrentUser();
+    updateItem();
+    addNewItem();
 });
 
 function showAll() {
@@ -68,6 +70,27 @@ function getCurrentUser() {
     });
 }
 
+function addNewItem() {
+    $("#new-item-form").submit(function (e) {
+        if (checkFormCreateItem()) {
+            let description = $("#description").val();
+            $.ajax({
+                method: 'POST',
+                url: './add.do',
+                data: {desc : description},
+                success: function (data) {
+                    addNewRow(data);
+                },
+                error: [ function (response) {
+                    console.log(response.status);
+                    window.location.href = "./auth.do";
+                }]
+            });
+            e.preventDefault();
+        }
+    });
+}
+
 function filterItems() {
     let check = $("#filter").prop("checked");
     if (check) {
@@ -91,6 +114,27 @@ function showFilterItems() {
 function addNewRow(data) {
     let result = formStringForInsert(data);
     $('#tableBody tr:last').after(result);
+}
+
+function updateItem() {
+    $(document).on('change', ':checkbox', function () {
+        let id = $(this).attr("id");
+        console.log(id);
+        if (id !== "filter") {
+            $.ajax({
+                type: "POST",
+                url: './update.do',
+                data: {id : $(this).attr("id"), done : $(this).prop("checked")},
+                success: function (data) {
+                    location.reload();
+                },
+                error: [ function (response) {
+                    console.log(response.status);
+                    window.location.href = "./auth.do";
+                }]
+            });
+        }
+    });
 }
 
 function validate(data) {

@@ -18,26 +18,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
     <script src="scripts/script.js"></script>
 </head>
-<script>
-    $(document).on('change', ':checkbox', function () {
-        let id = $(this).attr("id");
-        console.log(id);
-        if (id !== "filter") {
-            $.ajax({
-                type: "POST",
-                url: './update.do',
-                data: {id : $(this).attr("id"), done : $(this).prop("checked")},
-                success: function (data) {
-                    location.reload();
-                },
-                error: [ function (response) {
-                    console.log(response.status);
-                    window.location.href = "./auth.do";
-                }]
-            });
-        }
-    });
-</script>
 <body>
 <div class="container pt-3">
     <div class="row">
@@ -84,26 +64,6 @@
                     </div>
                     <input type="submit"/>
                 </form>
-                <script>
-                    $("#new-item-form").submit(function (e) {
-                        if (checkFormCreateItem()) {
-                            let description = $("#description").val();
-                            $.ajax({
-                                method: 'POST',
-                                url: './add.do',
-                                data: {desc : description},
-                                success: function (data) {
-                                    addNewRow(data);
-                                },
-                                error: [ function (response) {
-                                    console.log(response.status);
-                                    window.location.href = "./auth.do";
-                                }]
-                            });
-                            e.preventDefault();
-                        }
-                    });
-                </script>
             </div>
         </div>
     </div>
