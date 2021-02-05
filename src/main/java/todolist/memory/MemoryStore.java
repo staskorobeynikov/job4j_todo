@@ -1,5 +1,6 @@
 package todolist.memory;
 
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -51,6 +52,11 @@ public class MemoryStore implements Store {
 
     @Override
     public User findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public List<Category> findCategories() {
         return null;
     }
 }

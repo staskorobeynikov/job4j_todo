@@ -1,5 +1,6 @@
 package todolist.memory;
 
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -18,4 +19,6 @@ public interface Store {
     void addUser(User user);
 
     User findByEmail(String email);
+
+    List<Category> findCategories();
 }

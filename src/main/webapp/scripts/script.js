@@ -5,6 +5,18 @@ $(document).ready(function () {
     addNewItem();
 });
 
+function showCategories() {
+    $.ajax({
+        type: 'get',
+        url: './categories',
+        dataType: 'json',
+        success: function (data) {
+            document.getElementById("current")
+                .innerHTML = "Current User | " + data['username'];
+        }
+    })
+}
+
 function showAll() {
     $.ajax({
         type: 'POST',

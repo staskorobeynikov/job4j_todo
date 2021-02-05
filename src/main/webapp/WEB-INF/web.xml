@@ -77,4 +77,13 @@
         <servlet-name>CurrentUserServlet</servlet-name>
         <url-pattern>/current</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>todolist.servlets.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
 </web-app>

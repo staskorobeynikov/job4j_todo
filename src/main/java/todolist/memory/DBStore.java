@@ -3,6 +3,7 @@ package todolist.memory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -47,7 +48,7 @@ public class DBStore implements Store {
     @Override
     public void updateItem(Item item) {
         this.tx(session ->
-                        session.createQuery("UPDATE todolist.models.Item SET done = :done1 where id = :id")
+                        session.createQuery("UPDATE Item SET done = :done1 where id = :id")
                                 .setParameter("done1", item.isDone())
                                 .setParameter("id", item.getId())
                                 .executeUpdate());
@@ -57,7 +58,9 @@ public class DBStore implements Store {
     public List<Item> findAll() {
         return this.tx(
                 session ->
-                        session.createQuery("FROM todolist.models.Item ORDER BY id").list()
+                        session.createQuery(
+                                "select distinct i from Item i join fetch i.categories order by i.id"
+                        ).list()
         );
     }
 
@@ -65,7 +68,7 @@ public class DBStore implements Store {
     public List<Item> showFilterItems() {
         return this.tx(
                 session -> session.createQuery(
-                        "FROM todolist.models.Item WHERE done = false ORDER BY id"
+                        "FROM Item WHERE done = false ORDER BY id"
                 ).list()
         );
     }
@@ -79,9 +82,22 @@ public class DBStore implements Store {
     public User findByEmail(String email) {
         return (User) this.tx(
                 session -> session
-                        .createQuery("FROM todolist.models.User WHERE email = :email1")
+                        .createQuery("FROM User WHERE email = :email1")
                         .setParameter("email1", email)
                         .uniqueResult()
         );
+    }
+
+    @Override
+    public List<Category> findCategories() {
+        return this.tx(
+          session -> session.createQuery(
+                  "from Category ORDER BY id"
+          ).list()
+        );
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DBStore.getInstance().findCategories());
     }
 }
