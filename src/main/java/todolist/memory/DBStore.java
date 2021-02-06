@@ -97,6 +97,16 @@ public class DBStore implements Store {
         );
     }
 
+    @Override
+    public Category findById(int id) {
+        return (Category) this.tx(
+                session -> session
+                        .createQuery("FROM Category WHERE id = :id")
+                .setParameter("id", id)
+                .uniqueResult()
+        );
+    }
+
     public static void main(String[] args) {
         System.out.println(DBStore.getInstance().findCategories());
     }

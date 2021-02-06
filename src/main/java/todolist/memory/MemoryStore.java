@@ -59,4 +59,9 @@ public class MemoryStore implements Store {
     public List<Category> findCategories() {
         return null;
     }
+
+    @Override
+    public Category findById(int id) {
+        return null;
+    }
 }

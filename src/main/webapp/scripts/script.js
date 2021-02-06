@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    showCategories()
     showAll();
     getCurrentUser();
     updateItem();
@@ -7,14 +8,20 @@ $(document).ready(function () {
 
 function showCategories() {
     $.ajax({
-        type: 'get',
+        type: 'GET',
         url: './categories',
         dataType: 'json',
         success: function (data) {
-            document.getElementById("current")
-                .innerHTML = "Current User | " + data['username'];
+            let rsl = '';
+            let items = data;
+            for (let i = 0; i < items.length; i++) {
+                rsl += '<option value="' + items[i].id + '"/>' + items[i].name + '</option>' + '\n';
+            }
+            console.log(rsl)
+            document.getElementById("cIds")
+                .innerHTML = rsl;
         }
-    })
+    });
 }
 
 function showAll() {
@@ -42,12 +49,16 @@ function formStringForInsert(data) {
     let result = '';
     let id = data['id'];
     let desc = data['desc'];
+    let categories = data['categories'];
     let created = data['created'];
     let author = data['user'].username;
     let done = data['done'];
     result += '<tr class="rows"><td id="id">' + id + '</td>'
-        + '<td>' + desc + '</td>'
-        + '<td>' + author + '</td>'
+        + '<td>' + desc + '</td><td>';
+    for (let i = 0; i < categories.length; i++) {
+        result += categories[i]['name'] + "\n";
+    }
+    result += '</td><td>' + author + '</td>'
         + '<td>' + created + '</td>';
     if (!done) {
         result += '<td style="text-align: center; background-color: red">'
@@ -86,10 +97,11 @@ function addNewItem() {
     $("#new-item-form").submit(function (e) {
         if (checkFormCreateItem()) {
             let description = $("#description").val();
+            let ids = $("#cIds").val();
             $.ajax({
                 method: 'POST',
                 url: './add.do',
-                data: {desc : description},
+                data: {desc : description, cIds : ids},
                 success: function (data) {
                     addNewRow(data);
                 },

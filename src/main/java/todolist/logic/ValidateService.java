@@ -21,7 +21,10 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public Item addItem(Item item) {
+    public Item addItem(Item item, String[] ids) {
+        for (String id : ids) {
+            item.addCategory(store.findById(Integer.parseInt(id)));
+        }
         return store.addItem(item);
     }
 

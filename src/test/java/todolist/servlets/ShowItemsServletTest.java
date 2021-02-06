@@ -36,7 +36,7 @@ public class ShowItemsServletTest {
         item.setId(1);
         item.setDesc("Learn Spring");
         item.setDone(false);
-        validate.addItem(item);
+        // validate.addItem(item);
 
         StringWriter stringWriter = new StringWriter();
         stringWriter.write("");

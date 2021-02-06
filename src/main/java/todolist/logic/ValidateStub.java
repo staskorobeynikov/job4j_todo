@@ -13,7 +13,7 @@ public class ValidateStub implements Validate {
     private final Store store = MemoryStore.getInstance();
 
     @Override
-    public Item addItem(Item item) {
+    public Item addItem(Item item, String[] ids) {
         item.setId(1);
         return store.addItem(item);
     }

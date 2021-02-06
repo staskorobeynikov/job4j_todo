@@ -21,4 +21,6 @@ public interface Store {
     User findByEmail(String email);
 
     List<Category> findCategories();
+
+    Category findById(int id);
 }
