@@ -36,7 +36,7 @@ public class ShowItemsServletTest {
         item.setId(1);
         item.setDesc("Learn Spring");
         item.setDone(false);
-        // validate.addItem(item);
+        validate.addItem(item, new String[0]);
 
         StringWriter stringWriter = new StringWriter();
         stringWriter.write("");
@@ -54,7 +54,7 @@ public class ShowItemsServletTest {
         String string = stringWriter.toString();
         writer.flush();
 
-        assertThat(string, is("[{\"id\":1,\"desc\":\"Learn Spring\",\"done\":false}]"));
+        assertThat(string, is("[{\"id\":1,\"desc\":\"Learn Spring\",\"done\":false,\"categories\":[]}]"));
 
     }
 }

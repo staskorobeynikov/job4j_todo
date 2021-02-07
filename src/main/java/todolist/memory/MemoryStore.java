@@ -29,6 +29,11 @@ public class MemoryStore implements Store {
     }
 
     @Override
+    public Category addCategory(Category category) {
+        return null;
+    }
+
+    @Override
     public void updateItem(Item item) {
         Item update = store.get(item.getId());
         update.setDone(item.isDone());

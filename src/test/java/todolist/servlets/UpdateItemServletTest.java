@@ -28,7 +28,7 @@ public class UpdateItemServletTest {
     public void whenPostMethodThanItemUpdateOurStatus() {
         Validate validate = new ValidateStub();
         Item item = new Item("Learn Spring");
-        // validate.addItem(item);
+        validate.addItem(item, new String[0]);
 
         PowerMockito.mockStatic(ValidateService.class);
         HttpServletRequest req = mock(HttpServletRequest.class);

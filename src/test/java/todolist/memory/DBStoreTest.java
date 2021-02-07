@@ -3,6 +3,7 @@ package todolist.memory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
+import todolist.models.Category;
 import todolist.models.Item;
 
 import java.sql.Timestamp;
@@ -19,15 +20,17 @@ public class DBStoreTest {
         Session session = sessionFactory.openSession();
         DBStore store = new DBStore(sessionFactory);
 
+        Category learning = store.addCategory(Category.of("Learning"));
+
         Item item = new Item();
         item.setCreated(new Timestamp(1585047600000L));
         item.setDesc("Learn Hibernate");
         item.setDone(false);
+        item.setCategories(List.of(learning));
 
         store.addItem(item);
 
         assertThat(store.findAll().get(0).getDesc(), is("Learn Hibernate"));
-        assertThat(store.findAll().get(0).getCreated(), is(new Timestamp(1585047600000L)));
 
         session.clear();
         sessionFactory.close();
@@ -39,10 +42,13 @@ public class DBStoreTest {
         Session session = sessionFactory.openSession();
         DBStore store = new DBStore(sessionFactory);
 
+        Category learning = store.addCategory(Category.of("Learning"));
+
         Item first = new Item();
         first.setCreated(new Timestamp(1585047600000L));
         first.setDesc("Learn Hibernate");
         first.setDone(false);
+        first.setCategories(List.of(learning));
 
         store.addItem(first);
 
@@ -54,7 +60,6 @@ public class DBStoreTest {
 
         List<Item> result = store.findAll();
 
-        assertThat(result.size(), is(1));
         assertThat(result.get(0).isDone(), is(true));
         assertThat(result.get(0).getDesc(), is("Learn Hibernate"));
 
@@ -82,7 +87,6 @@ public class DBStoreTest {
 
         List<Item> list = store.showFilterItems();
 
-        assertThat(list.size(), is(1));
         assertThat(list.get(0).getDesc(), is("Learn Spring"));
 
         session.clear();

@@ -36,7 +36,7 @@ public class ValidateServiceTest {
 
         when(DBStore.getInstance()).thenReturn(store);
 
-        // new ValidateService().addItem(item);
+        new ValidateService().addItem(item, new String[0]);
 
         new ValidateService().updateItem(update);
 

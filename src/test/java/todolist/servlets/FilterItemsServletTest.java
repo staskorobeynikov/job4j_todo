@@ -37,7 +37,7 @@ public class FilterItemsServletTest {
         item.setDesc("Learn Spring");
         item.setCreated(new Timestamp(1585054800000L));
         item.setDone(true);
-        // validate.addItem(item);
+        validate.addItem(item, new String[0]);
 
         StringWriter stringWriter = new StringWriter();
         stringWriter.write("");

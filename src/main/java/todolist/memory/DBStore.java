@@ -46,6 +46,12 @@ public class DBStore implements Store {
     }
 
     @Override
+    public Category addCategory(Category category) {
+        this.tx(session -> session.save(category));
+        return category;
+    }
+
+    @Override
     public void updateItem(Item item) {
         this.tx(session ->
                         session.createQuery("UPDATE Item SET done = :done1 where id = :id")
@@ -105,9 +111,5 @@ public class DBStore implements Store {
                 .setParameter("id", id)
                 .uniqueResult()
         );
-    }
-
-    public static void main(String[] args) {
-        System.out.println(DBStore.getInstance().findCategories());
     }
 }

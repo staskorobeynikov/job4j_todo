@@ -10,6 +10,8 @@ public interface Store {
 
     Item addItem(Item item);
 
+    Category addCategory(Category category);
+
     void updateItem(Item item);
 
     List<Item> showFilterItems();
