@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MemoryStore implements Store {
 
     private static final MemoryStore INSTANCE = new MemoryStore();
 
     private final Map<Integer, Item> store = new HashMap<>();
+
+    private final Map<Integer, Category> categories = new HashMap<>();
 
     public MemoryStore() {
     }
@@ -30,7 +33,8 @@ public class MemoryStore implements Store {
 
     @Override
     public Category addCategory(Category category) {
-        return null;
+        categories.put(category.getId(), category);
+        return category;
     }
 
     @Override
@@ -62,7 +66,7 @@ public class MemoryStore implements Store {
 
     @Override
     public List<Category> findCategories() {
-        return null;
+        return new ArrayList<>(categories.values());
     }
 
     @Override
