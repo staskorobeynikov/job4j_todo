@@ -2,6 +2,7 @@ package todolist.logic;
 
 import todolist.memory.MemoryStore;
 import todolist.memory.Store;
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -15,6 +16,9 @@ public class ValidateStub implements Validate {
     @Override
     public Item addItem(Item item, String[] ids) {
         item.setId(1);
+        for (String id : ids) {
+            item.addCategory(store.findById(Integer.parseInt(id)));
+        }
         return store.addItem(item);
     }
 
@@ -41,11 +45,16 @@ public class ValidateStub implements Validate {
 
     @Override
     public void addUser(User user) {
-
+        store.addUser(user);
     }
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        return store.findByEmail(email);
+    }
+
+    @Override
+    public void addCategory(Category category) {
+        store.addCategory(category);
     }
 }

@@ -2,6 +2,7 @@ package todolist.logic;
 
 import todolist.memory.DBStore;
 import todolist.memory.Store;
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -51,5 +52,10 @@ public class ValidateService implements Validate {
     @Override
     public User findByEmail(String email) {
         return store.findByEmail(email);
+    }
+
+    @Override
+    public void addCategory(Category category) {
+
     }
 }

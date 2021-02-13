@@ -1,5 +1,6 @@
 package todolist.logic;
 
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -18,4 +19,6 @@ public interface Validate {
     void addUser(User user);
 
     User findByEmail(String email);
+
+    void addCategory(Category category);
 }

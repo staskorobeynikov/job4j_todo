@@ -10,6 +10,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import todolist.logic.Validate;
 import todolist.logic.ValidateService;
 import todolist.logic.ValidateStub;
+import todolist.models.Category;
 import todolist.models.Item;
 import todolist.models.User;
 
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -36,6 +39,9 @@ public class AddItemServletTest {
         Validate validate = new ValidateStub();
         User user = new User("Anonymous", "root@local", "root");
         user.setId(1);
+        Category category = Category.of("Learning");
+        category.setId(1);
+        validate.addCategory(category);
 
         StringWriter writer = new StringWriter();
         writer.write("");
@@ -48,6 +54,7 @@ public class AddItemServletTest {
 
         when(ValidateService.getInstance()).thenReturn(validate);
         when(req.getParameter("desc")).thenReturn("Learn Hibernate");
+        when(req.getParameterValues("cIds[]")).thenReturn(new String[]{"1"});
         when(req.getSession()).thenReturn(session);
         when(req.getSession().getAttribute("user")).thenReturn(user);
         when(resp.getWriter()).thenReturn(pWriter);
@@ -65,5 +72,11 @@ public class AddItemServletTest {
         assertThat(test.getDesc(), is("Learn Hibernate"));
         assertThat(test.isDone(), is(false));
         assertThat(user1, is(user));
+
+        assertThat(string, is("{\"id\":1,\"desc\":\"Learn Hibernate\",\"created\":\"" +
+                test.getCreated().toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("MMM dd, yyyy, h:mm:ss a", Locale.ENGLISH)) +
+                "\",\"done\":false,\"user\":{\"id\":1,\"username\":\"Anonymous\",\"email\":\"root@local\","
+                + "\"password\":\"root\"},\"categories\":[{\"id\":1,\"name\":\"Learning\"}]}"));
     }
 }

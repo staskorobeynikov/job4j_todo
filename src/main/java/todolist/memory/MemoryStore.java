@@ -18,6 +18,8 @@ public class MemoryStore implements Store {
 
     private final Map<Integer, Category> categories = new HashMap<>();
 
+    private final Map<Integer, User> users = new HashMap<>();
+
     public MemoryStore() {
     }
 
@@ -56,12 +58,17 @@ public class MemoryStore implements Store {
 
     @Override
     public void addUser(User user) {
-
+        users.put(user.getId(), user);
     }
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        return users
+                .values()
+                .stream()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -71,6 +78,6 @@ public class MemoryStore implements Store {
 
     @Override
     public Category findById(int id) {
-        return null;
+        return categories.get(id);
     }
 }
