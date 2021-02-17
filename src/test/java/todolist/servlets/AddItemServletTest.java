@@ -73,10 +73,10 @@ public class AddItemServletTest {
         assertThat(test.isDone(), is(false));
         assertThat(user1, is(user));
 
-        assertThat(string, is("{\"id\":1,\"desc\":\"Learn Hibernate\",\"created\":\"" +
-                test.getCreated().toLocalDateTime()
-                        .format(DateTimeFormatter.ofPattern("MMM dd, yyyy, h:mm:ss a", Locale.ENGLISH)) +
-                "\",\"done\":false,\"user\":{\"id\":1,\"username\":\"Anonymous\",\"email\":\"root@local\","
+        assertThat(string, is("{\"id\":1,\"desc\":\"Learn Hibernate\",\"created\":\""
+                + test.getCreated().toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("MMM dd, yyyy, h:mm:ss a", Locale.ENGLISH))
+                + "\",\"done\":false,\"user\":{\"id\":1,\"username\":\"Anonymous\",\"email\":\"root@local\","
                 + "\"password\":\"root\"},\"categories\":[{\"id\":1,\"name\":\"Learning\"}]}"));
     }
 }
