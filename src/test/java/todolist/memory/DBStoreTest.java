@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import todolist.models.Category;
 import todolist.models.Item;
+import todolist.models.User;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -88,6 +89,67 @@ public class DBStoreTest {
         List<Item> list = store.showFilterItems();
 
         assertThat(list.get(0).getDesc(), is("Learn Spring"));
+
+        session.clear();
+        sessionFactory.close();
+    }
+
+    @Test
+    public void whenTestMethodAddUserAndFindByEmail() {
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
+
+        User user = new User("username1", "email1@root.com", "12345");
+        store.addUser(user);
+
+        User byEmail = store.findByEmail("email1@root.com");
+
+        assertThat(byEmail.getUsername(), is("username1"));
+
+        session.clear();
+        sessionFactory.close();
+    }
+
+    @Test
+    public void whenTestMethodAddCategoriesAndFindAllInStore() {
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
+
+        Category learning = store.addCategory(Category.of("Learning"));
+        Category hobby = store.addCategory(Category.of("Hobby"));
+        Category others = store.addCategory(Category.of("Others"));
+
+        store.addCategory(learning);
+        store.addCategory(hobby);
+        store.addCategory(others);
+
+        List<Category> categories = store.findCategories();
+
+        assertThat(categories, is(List.of(learning, hobby, others)));
+
+        session.clear();
+        sessionFactory.close();
+    }
+
+    @Test
+    public void whenTestMethodAddCategoriesAndFindById() {
+        SessionFactory sessionFactory = ConnectionRollback.create(HibernateFactory.FACTORY);
+        Session session = sessionFactory.openSession();
+        DBStore store = new DBStore(sessionFactory);
+
+        Category learning = store.addCategory(Category.of("Learning"));
+        Category hobby = store.addCategory(Category.of("Hobby"));
+        Category others = store.addCategory(Category.of("Others"));
+
+        store.addCategory(learning);
+        store.addCategory(hobby);
+        store.addCategory(others);
+
+        Category category = store.findById(hobby.getId());
+
+        assertThat(category.getName(), is("Hobby"));
 
         session.clear();
         sessionFactory.close();
