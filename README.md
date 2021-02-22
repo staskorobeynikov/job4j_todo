@@ -142,5 +142,5 @@
 </p>
 
 [![alt-text](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/carbonil_ks) &emsp; 
-<a href="mailto:stas.karabeinikau@gmail.com?"><img src="https://img.shields.io/badge/gmail-%23DD0031.svg?&style=for-the-badge&logo=gmail&logoColor=white"/></a> &emsp;
-<a href="mailto:stas.korobeinikov@mail.ru?"><img src="https://img.shields.io/badge/@%20Mail.ru-005FED?&style=for-the-badge&logo=mail&logoColor=white"/></a>
+<a href="mailto:stas.karabeinikau@gmail.com"><img src="https://img.shields.io/badge/gmail-%23DD0031.svg?&style=for-the-badge&logo=gmail&logoColor=white"/></a> &emsp;
+<a href="mailto:stas.korobeinikov@mail.ru"><img src="https://img.shields.io/badge/@%20Mail.ru-005FED?&style=for-the-badge&logo=mail&logoColor=white"/></a>
