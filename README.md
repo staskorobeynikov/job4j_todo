@@ -1,6 +1,6 @@
 # TODOList
 
-[![Build Status](https://travis-ci.org/staskorobeynikov/job4j_todo.svg?branch=master)](https://travis-ci.org/staskorobeynikov/job4j_todo)
+[![Build Status](https://travis-ci.com/staskorobeynikov/job4j_todo.svg?branch=master)](https://travis-ci.com/staskorobeynikov/job4j_todo)
 [![codecov](https://codecov.io/gh/staskorobeynikov/job4j_todo/branch/master/graph/badge.svg)](https://codecov.io/gh/staskorobeynikov/job4j_todo)
 
 **```Веб-приложение для создания заданий и контроля их выполнения.```**
