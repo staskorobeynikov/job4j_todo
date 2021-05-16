@@ -4,3 +4,10 @@ CREATE TABLE items(
 	created timestamp not null,
 	done boolean
 );
+
+CREATE TABLE users(
+    id serial primary key not null,
+    email text not null unique,
+    password text not null,
+    username text not null
+);

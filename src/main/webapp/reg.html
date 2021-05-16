@@ -19,6 +19,7 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script src="scripts/script.js"></script>
+<script src="scripts/registration.js"></script>
 <body>
 <div class="container pt-1">
     <div class="row">
@@ -26,7 +27,9 @@
             <div class="card-header" style="font-weight: bold; font-size: larger">
                 Регистрация
             </div>
-            <div class="card-body">
+            <div class="container" id="error">
+            </div>
+            <div class="card-body" id="form_reg">
                 <form action="./reg.do" method="post">
                     <div class="form-group">
                         <label for="username" style="font-weight: bold">Имя</label>
