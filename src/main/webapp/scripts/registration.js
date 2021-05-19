@@ -20,3 +20,8 @@ function showError() {
 function getParamError() {
     return new URLSearchParams(window.location.search).get("error");
 }
+
+function checkFormRegistration() {
+    let elements = [$("#username"), $("#regEmail"), $("#regPassword")];
+    return validate(elements);
+}

@@ -17,7 +17,6 @@ function showCategories() {
             for (let i = 0; i < items.length; i++) {
                 rsl += '<option value="' + items[i].id + '"/>' + items[i].name + '</option>' + '\n';
             }
-            console.log(rsl)
             document.getElementById("cIds")
                 .innerHTML = rsl;
         }
@@ -56,7 +55,7 @@ function formStringForInsert(data) {
     result += '<tr class="rows"><td id="id">' + id + '</td>'
         + '<td>' + desc + '</td><td>';
     for (let i = 0; i < categories.length; i++) {
-        result += categories[i]['name'] + "\n";
+        result += categories[i]['name'] + '<br>';
     }
     result += '</td><td>' + author + '</td>'
         + '<td>' + created + '</td>';
@@ -161,33 +160,8 @@ function updateItem() {
     });
 }
 
-function validate(data) {
-    let result = true;
-    let answer = '';
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].val() === '') {
-            answer += data[i].attr("placeholder") + "\n";
-            result = false;
-        }
-    }
-    if (!result) {
-        alert(answer);
-    }
-    return result;
-}
-
 function checkFormCreateItem() {
     let elements = [$("#description")];
-    return validate(elements);
-}
-
-function checkFormRegistration() {
-    let elements = [$("#username"), $("#regEmail"), $("#regPassword")];
-    return validate(elements);
-}
-
-function checkFormAuth() {
-    let elements = [$("#email"), $("#password")];
     return validate(elements);
 }
 
