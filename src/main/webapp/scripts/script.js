@@ -66,7 +66,7 @@ function formStringForInsert(data) {
             + '</tr>'
     } else {
         result += '<td style="text-align: center; background-color: lightgreen">'
-            + '<input type="checkbox" id="' + id + '" name="task" value="task">'
+            + '<input type="checkbox" id="' + id + '" name="task" value="task" disabled>'
             + '</td>'
             + '</tr>'
     }
@@ -142,14 +142,22 @@ function addNewRow(data) {
 function updateItem() {
     $(document).on('change', ':checkbox', function () {
         let id = $(this).attr("id");
-        console.log(id);
         if (id !== "filter") {
             $.ajax({
                 type: "POST",
                 url: './update.do',
                 data: {id : $(this).attr("id"), done : $(this).prop("checked")},
-                success: function (data) {
-                    location.reload();
+                success: function () {
+                    let container = document.getElementById("message");
+                    container.innerHTML = "<div class='row'>"
+                        + "<div style='color:darkgreen; font-weight: bold; margin: 20px 0 0 20px;'>"
+                        + "Задание успешно выполнено."
+                        + "</div>"
+                        + "</div>";
+                    setTimeout(function () {
+                        container.innerHTML = ''
+                        location.reload();
+                    }, 3000);
                 },
                 error: [ function (response) {
                     console.log(response.status);
