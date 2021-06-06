@@ -61,6 +61,14 @@ public class DBStore implements Store {
     }
 
     @Override
+    public void deleteItem(int id) {
+        this.tx(session ->
+            session.createQuery("DELETE Item where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate());
+    }
+
+    @Override
     public List<Item> findAll() {
         return this.tx(
                 session ->

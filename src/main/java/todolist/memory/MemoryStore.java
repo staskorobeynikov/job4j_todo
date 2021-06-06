@@ -80,4 +80,9 @@ public class MemoryStore implements Store {
     public Category findById(int id) {
         return categories.get(id);
     }
+
+    @Override
+    public void deleteItem(int id) {
+        store.remove(id);
+    }
 }

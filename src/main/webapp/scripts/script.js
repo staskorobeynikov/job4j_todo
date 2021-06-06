@@ -66,7 +66,7 @@ function formStringForInsert(data) {
             + '</tr>'
     } else {
         result += '<td style="text-align: center; background-color: lightgreen">'
-            + '<input type="checkbox" id="' + id + '" name="task" value="task" disabled>'
+            + '<button class="btn btn-outline-primary" onclick="deleteItem(' + id + ')">Delete</button>'
             + '</td>'
             + '</tr>'
     }
@@ -157,7 +157,7 @@ function updateItem() {
                     setTimeout(function () {
                         container.innerHTML = ''
                         location.reload();
-                    }, 3000);
+                    }, 2000);
                 },
                 error: [ function (response) {
                     console.log(response.status);
@@ -165,6 +165,29 @@ function updateItem() {
                 }]
             });
         }
+    });
+}
+
+function deleteItem(id) {
+    $.ajax({
+        type: "POST",
+        url: './delete.do',
+        data: {id : id},
+        success: function () {
+            let container = document.getElementById("message");
+            container.innerHTML = "<div class='row'>"
+                + "<div style='color:darkgreen; font-weight: bold; margin: 20px 0 0 20px;'>"
+                + "Задание успешно удалено."
+                + "</div>"
+                + "</div>";
+            setTimeout(function () {
+                container.innerHTML = ''
+                location.reload();
+            }, 2000);
+        },
+        error: [ function () {
+            window.location.href = "./auth.do";
+        }]
     });
 }
 

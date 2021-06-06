@@ -25,4 +25,6 @@ public interface Store {
     List<Category> findCategories();
 
     Category findById(int id);
+
+    void deleteItem(int id);
 }
