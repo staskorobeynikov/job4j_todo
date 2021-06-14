@@ -49,7 +49,7 @@ function formStringForInsert(data) {
     let id = data['id'];
     let desc = data['desc'];
     let categories = data['categories'];
-    let created = data['created'];
+    let created = formatDate(data['created']);
     let author = data['user'].username;
     let done = data['done'];
     result += '<tr class="rows"><td id="id">' + id + '</td>'
@@ -58,7 +58,7 @@ function formStringForInsert(data) {
         result += categories[i]['name'] + '<br>';
     }
     result += '</td><td>' + author + '</td>'
-        + '<td>' + created + '</td>';
+        + '<td>' + created.toLocaleString() + '</td>';
     if (!done) {
         result += '<td style="text-align: center; background-color: red">'
             + '<input type="checkbox" id="' + id + '" name="task" value="task">'
@@ -73,6 +73,17 @@ function formStringForInsert(data) {
             + '</tr>'
     }
     return result;
+}
+
+function formatDate(string) {
+    let date = Date.parse(string);
+    let formatter = new Intl.DateTimeFormat("ru", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+    return formatter.format(date);
 }
 
 function deleteRows() {
