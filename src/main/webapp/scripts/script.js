@@ -62,13 +62,13 @@ function formStringForInsert(data) {
     if (!done) {
         result += '<td style="text-align: center; background-color: red">'
             + '<input type="checkbox" id="' + id + '" name="task" value="task">'
-            + '<label for="task" style="font-weight: bold; margin-left: .5rem"> Выполнить</label>'
+            + '<br><label for="task" style="font-weight: bold; margin-left: .5rem">Выполнить</label>'
             + '</td>'
             + '</tr>'
     } else {
         result += '<td style="text-align: center; background-color: lightgreen">'
             + '<button class="btn btn-link" onclick="deleteItem(' + id + ')">'
-            + '<i class="fa fa-times" aria-hidden="true"></i> Удалить</button>'
+            + '<i class="fa fa-trash" aria-hidden="true"></i><br>Удалить</button>'
             + '</td>'
             + '</tr>'
     }
@@ -89,7 +89,7 @@ function formatDate(string) {
 function deleteRows() {
     let rows = document.getElementsByClassName("rows");
     for(let i = 0; i < rows.length; i++){
-        rows[i].innerHTML = "";
+        rows[i].innerHTML = '';
     }
 }
 

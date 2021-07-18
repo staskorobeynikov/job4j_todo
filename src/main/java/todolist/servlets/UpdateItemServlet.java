@@ -1,6 +1,5 @@
 package todolist.servlets;
 
-import todolist.logic.Validate;
 import todolist.logic.ValidateService;
 import todolist.models.Item;
 
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UpdateItemServlet extends HttpServlet {
 
-    private final Validate validate = ValidateService.getInstance();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String id = req.getParameter("id");
@@ -19,6 +16,6 @@ public class UpdateItemServlet extends HttpServlet {
         Item item = new Item();
         item.setId(Integer.parseInt(id));
         item.setDone(Boolean.parseBoolean(done));
-        validate.updateItem(item);
+        ValidateService.getInstance().updateItem(item);
     }
 }

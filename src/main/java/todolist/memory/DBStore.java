@@ -82,7 +82,7 @@ public class DBStore implements Store {
     public List<Item> showFilterItems() {
         return this.tx(
                 session -> session.createQuery(
-                        "FROM Item WHERE done = false ORDER BY id"
+                        "select distinct i from Item i join fetch i.categories where i.done = false order by i.id"
                 ).list()
         );
     }

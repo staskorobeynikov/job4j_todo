@@ -13,11 +13,9 @@ import java.util.List;
 
 public class FilterItemsServlet extends HttpServlet {
 
-    private final Validate validate = ValidateService.getInstance();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Item> list = validate.showFilterItems();
+        List<Item> list = ValidateService.getInstance().showFilterItems();
         String json = new Gson().toJson(list);
         resp.setContentType("json");
         resp.getWriter().write(json);
