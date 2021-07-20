@@ -74,14 +74,17 @@ public class DBStoreTest {
         Session session = sessionFactory.openSession();
         DBStore store = new DBStore(sessionFactory);
 
+        Category learning = store.addCategory(Category.of("Learning"));
         Item first = new Item();
         first.setCreated(new Timestamp(1585047600000L));
         first.setDesc("Learn Hibernate");
         first.setDone(true);
+        first.setCategories(List.of(learning));
         Item second = new Item();
         second.setCreated(new Timestamp(1585054800000L));
         second.setDesc("Learn Spring");
         second.setDone(false);
+        second.setCategories(List.of(learning));
 
         store.addItem(first);
         store.addItem(second);
